@@ -3,6 +3,7 @@ view of attech toolkit but its still in devloping
 tiktok: at._.tech                                     
 plugins needed:                                                 
 git                                                 
+imagetk                                          
 tkinter                                                  
 if you dont know to install watch or lookup for a tutorial                                          
 tool is made for linux                                                            
