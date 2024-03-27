@@ -50,4 +50,19 @@ public class MultiToolApp extends JFrame {
     }
 
     public static void main(String[] args) {
-        // Set the look and feel to Nimbus 
+        // Set the look and feel to Nimbus for modern UI
+        try {
+            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                MultiToolApp app = new MultiToolApp();
+                app.setVisible(true);
+            }
+        });
+    }
+}
