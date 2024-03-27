@@ -112,4 +112,5 @@ class BruteForceWindow(tk.Toplevel):
 
         ttk.Label(self, text="Brute Force Tool", font=("Helvetica", 20), background="#ffffff").pack(pady=20)
 
-        self.entry_url = self.create_entry("
+        self.entry_url = self.create_entry("URL:")
+
