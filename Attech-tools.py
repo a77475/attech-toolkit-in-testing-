@@ -3,6 +3,7 @@ import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
 import webbrowser
+from ttkthemes import ThemedStyle
 
 class AttackToolkit(tk.Tk):
     def __init__(self):
@@ -98,8 +99,10 @@ class IPToLocationWindow(tk.Toplevel):
 
         ttk.Label(self, text="IP to Location Tool", font=("Helvetica", 20), background="#f0f0f0").pack(pady=20)
 
-        self.entry_coordinates = self.create_entry("Coordinates (lat, long):")
-        ttk.Button(self, text="Get Location", command=self.open_map, style="Main.TButton").pack(pady=10, fill=tk.X)
+        self.entry_ip = self.create_entry("IP Address:")
+
+        style = ThemedStyle(self)
+        style.set_theme("arc")
 
     def create_entry(self, label_text, **kwargs):
         frame = ttk.Frame(self, padding=(50, 0), style="Main.TFrame")
@@ -110,8 +113,8 @@ class IPToLocationWindow(tk.Toplevel):
         return entry
 
     def open_map(self):
-        coordinates = self.entry_coordinates.get()
-        url = f"https://www.google.com/maps/search/?api=1&query={coordinates}"
+        ip_address = self.entry_ip.get()
+        url = f"https://www.google.com/maps/search/?api=1&query={ip_address}"
         webbrowser.open_new_tab(url)
 
 if __name__ == "__main__":
@@ -120,8 +123,8 @@ if __name__ == "__main__":
     style = ttk.Style()
     style.theme_use("clam")
 
-    style.configure("Topbar.TButton", foreground="#fff", background="#007bff", font=("Helvetica", 12), padding=10, borderwidth=0, relief="solid", bordercolor="#007bff")
+    style.configure("Topbar.TButton", foreground="#fff", background="#007bff", font=("Helvetica", 12), padding=10, borderwidth=0, relief="solid", bordercolor="#007bff", borderradius=20)
     style.map("Topbar.TButton", background=[("active", "#0056b3")])
-    style.configure("Main.TButton", foreground="#fff", background="#007bff", font=("Helvetica", 12), padding=10)
+    style.configure("Main.TButton", foreground="#fff", background="#007bff", font=("Helvetica", 12), padding=10, borderwidth=0, relief="solid", bordercolor="#007bff", borderradius=20)
 
     app.mainloop()
