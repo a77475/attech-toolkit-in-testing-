@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
 import os
-import requests
+import webbrowser
 
 class AttackToolkit(tk.Tk):
     def __init__(self):
@@ -96,16 +96,13 @@ class IPToLocationWindow(tk.Toplevel):
     def __init__(self, master):
         super().__init__(master)
         self.title("IP to Location Tool")
-        self.geometry("400x250")
+        self.geometry("400x400")
         self.configure(bg="#f0f0f0")
 
         ttk.Label(self, text="IP to Location Tool", font=("Helvetica", 20), background="#f0f0f0").pack(pady=20)
 
         self.entry_ip = self.create_entry("IP Address:")
-        self.result_label = ttk.Label(self, text="", background="#f0f0f0")
-        self.result_label.pack(pady=10)
-
-        ttk.Button(self, text="Get Location", command=self.get_location, style="Main.TButton").pack(pady=10, fill=tk.X)
+        ttk.Button(self, text="Get Location", command=self.open_map, style="Main.TButton").pack(pady=10, fill=tk.X)
 
     def create_entry(self, label_text, **kwargs):
         frame = ttk.Frame(self, padding=(50, 0), style="Main.TFrame")
@@ -115,13 +112,10 @@ class IPToLocationWindow(tk.Toplevel):
         entry.pack(side=tk.RIGHT, fill=tk.X, expand=True)
         return entry
 
-    def get_location(self):
+    def open_map(self):
         ip_address = self.entry_ip.get()
-        url = f"https://ipinfo.io/{ip_address}/json"
-        response = requests.get(url)
-        data = response.json()
-        location = data.get("loc", "Location not found.")
-        self.result_label.config(text=f"Location: {location}")
+        url = f"https://www.google.com/maps/search/?api=1&query={ip_address}"
+        webbrowser.open_new_tab(url)
 
 if __name__ == "__main__":
     app = AttackToolkit()
