@@ -1,8 +1,8 @@
+import os
 import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
 import webbrowser
-import os
 
 class AttackToolkit(tk.Tk):
     def __init__(self):
@@ -15,18 +15,15 @@ class AttackToolkit(tk.Tk):
         self.create_topbar_menu()
 
     def load_logo(self):
-        try:
-            logo_path = "attech.png"
-            if os.path.exists(logo_path):
-                self.logo = Image.open(logo_path)
-                self.logo = self.logo.resize((200, 100), Image.ANTIALIAS)
-                self.logo = ImageTk.PhotoImage(self.logo)
-                label_logo = ttk.Label(self, image=self.logo, background="#f0f0f0")
-                label_logo.pack(pady=20, padx=10)
-            else:
-                print("Logo file not found.")
-        except Exception as e:
-            print("Error loading logo:", e)
+        logo_path = "logo.png"  # Adjust the file path as needed for Linux
+        if os.path.exists(logo_path):
+            self.logo = Image.open(logo_path)
+            self.logo = self.logo.resize((200, 100), Image.ANTIALIAS)
+            self.logo = ImageTk.PhotoImage(self.logo)
+            label_logo = ttk.Label(self, image=self.logo, background="#f0f0f0")
+            label_logo.pack(pady=20, padx=10)
+        else:
+            print("Logo file not found.")
 
     def create_topbar_menu(self):
         topbar_frame = tk.Frame(self, bg="#333")
@@ -126,4 +123,5 @@ if __name__ == "__main__":
     style.configure("Topbar.TButton", foreground="#fff", background="#007bff", font=("Helvetica", 12), padding=10, borderwidth=0, relief="solid", bordercolor="#007bff")
     style.map("Topbar.TButton", background=[("active", "#0056b3")])
     style.configure("Main.TButton", foreground="#fff", background="#007bff", font=("Helvetica", 12), padding=10)
-   
+
+    app.mainloop()
