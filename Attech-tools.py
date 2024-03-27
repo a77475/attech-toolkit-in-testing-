@@ -109,3 +109,25 @@ class IPToLocationWindow(tk.Toplevel):
         self.entry_ip = self.create_entry("IP Address:")
 
         style = ThemedStyle(self)
+        style.set_theme("arc")
+
+    def create_entry(self, label_text, **kwargs):
+        frame = ttk.Frame(self, padding=(50, 0), style="Main.TFrame")
+        frame.pack(fill=tk.X, **kwargs)
+        ttk.Label(frame, text=label_text, background="#f0f0f0").pack(side=tk.LEFT)
+        entry = ttk.Entry(frame)
+        entry.pack(side=tk.RIGHT, fill=tk.X, expand=True)
+
+    def open_map(self):
+        ip_address = self.entry_ip.get()
+        geolocator = Nominatim(user_agent="geoapiExercises")
+        location = geolocator.geocode(ip_address)
+        if location:
+            url = f"https://www.google.com/maps/place/{location.latitude},{location.longitude}"
+            webbrowser.open_new_tab(url)
+        else:
+            messagebox.showerror("Error", "Location not found.")
+
+if __name__ == "__main__":
+    app = AttackToolkit()
+    app.mainloop()
