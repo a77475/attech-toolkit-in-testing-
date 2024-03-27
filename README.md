@@ -7,8 +7,8 @@ tkinter
 if you dont know to install watch or lookup for a tutorial                                          
 tool is made for linux                                                            
 to install:                                                          
-git clone github.com/a77574/attech-toolkit-in-testing                          
-Cd attech-toolkit-in-testing                                                                                
+git clone https://github.com/a77475/attech-toolkit-in-testing-                   
+Cd attech-toolkit-in-testing-                                                                                
 python3 Attech-tools.py                                                         
 __________________________________________
 
