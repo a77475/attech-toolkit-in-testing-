@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
-import os
 import webbrowser
 
 class AttackToolkit(tk.Tk):
@@ -12,7 +11,7 @@ class AttackToolkit(tk.Tk):
         self.configure(bg="#f0f0f0")
 
         self.load_logo()
-        self.create_sidebar_menu()
+        self.create_topbar_menu()
 
     def load_logo(self):
         try:
@@ -28,13 +27,13 @@ class AttackToolkit(tk.Tk):
         except Exception as e:
             print("Error loading logo:", e)
 
-    def create_sidebar_menu(self):
-        sidebar_frame = tk.Frame(self, bg="#333")
-        sidebar_frame.place(relx=0, rely=0, relwidth=0.2, relheight=1)
+    def create_topbar_menu(self):
+        topbar_frame = tk.Frame(self, bg="#333")
+        topbar_frame.place(relx=0, rely=0, relwidth=1, relheight=0.1)
 
-        ttk.Button(sidebar_frame, text="DDoS Tool", command=self.open_ddos, style="Sidebar.TButton").pack(pady=10, fill=tk.X)
-        ttk.Button(sidebar_frame, text="Brute Force Tool", command=self.open_brute_force, style="Sidebar.TButton").pack(pady=10, fill=tk.X)
-        ttk.Button(sidebar_frame, text="IP to Location Tool", command=self.open_ip_to_location, style="Sidebar.TButton").pack(pady=10, fill=tk.X)
+        ttk.Button(topbar_frame, text="DDoS", command=self.open_ddos, style="Topbar.TButton").pack(side=tk.LEFT, padx=10, pady=10)
+        ttk.Button(topbar_frame, text="Brute Force", command=self.open_brute_force, style="Topbar.TButton").pack(side=tk.LEFT, padx=10, pady=10)
+        ttk.Button(topbar_frame, text="IP to Location", command=self.open_ip_to_location, style="Topbar.TButton").pack(side=tk.LEFT, padx=10, pady=10)
 
     def open_ddos(self):
         ddos_window = DDoSWindow(self)
@@ -101,7 +100,7 @@ class IPToLocationWindow(tk.Toplevel):
 
         ttk.Label(self, text="IP to Location Tool", font=("Helvetica", 20), background="#f0f0f0").pack(pady=20)
 
-        self.entry_ip = self.create_entry("IP Address:")
+        self.entry_coordinates = self.create_entry("Coordinates (lat, long):")
         ttk.Button(self, text="Get Location", command=self.open_map, style="Main.TButton").pack(pady=10, fill=tk.X)
 
     def create_entry(self, label_text, **kwargs):
@@ -113,8 +112,8 @@ class IPToLocationWindow(tk.Toplevel):
         return entry
 
     def open_map(self):
-        ip_address = self.entry_ip.get()
-        url = f"https://www.google.com/maps/search/?api=1&query={ip_address}"
+        coordinates = self.entry_coordinates.get()
+        url = f"https://www.google.com/maps/search/?api=1&query={coordinates}"
         webbrowser.open_new_tab(url)
 
 if __name__ == "__main__":
@@ -123,8 +122,7 @@ if __name__ == "__main__":
     style = ttk.Style()
     style.theme_use("clam")
 
-    style.configure("Sidebar.TButton", foreground="#fff", background="#444", font=("Helvetica", 12), padding=10)
+    style.configure("Topbar.TButton", foreground="#fff", background="#007bff", font=("Helvetica", 12), padding=10, borderwidth=0, relief="solid", bordercolor="#007bff")
+    style.map("Topbar.TButton", background=[("active", "#0056b3")])
     style.configure("Main.TButton", foreground="#fff", background="#007bff", font=("Helvetica", 12), padding=10)
-    style.configure("Main.TFrame", background="#f0f0f0")
-
-    app.mainloop()
+   
