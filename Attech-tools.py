@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import os
 import tkinter as tk
 from tkinter import ttk, messagebox
@@ -17,7 +19,7 @@ class AttackToolkit(tk.Tk):
         self.create_topbar_menu()
 
     def load_logo(self):
-        logo_path = "logo.png"  # Adjust the file path as needed for Linux
+        logo_path = "logo.png"  # Adjust the file path as needed
         if os.path.exists(logo_path):
             self.logo = Image.open(logo_path)
             self.logo = self.logo.resize((200, 100), Image.ANTIALIAS)
@@ -125,24 +127,4 @@ class IPToLocationWindow(tk.Toplevel):
             url = f"https://www.google.com/maps/place/{location.latitude},{location.longitude}"
             webbrowser.open_new_tab(url)
         else:
-            messagebox.showerror("Error", "Invalid IP address or location not found.")
-
-class SettingsWindow(tk.Toplevel):
-    def __init__(self, master):
-        super().__init__(master)
-        self.title("Settings")
-        self.geometry("400x300")
-        self.configure(bg="#f0f0f0")
-
-        ttk.Label(self, text="Settings", font=("Helvetica", 20), background="#f0f0f0").pack(pady=20)
-
-        ttk.Button(self, text="Change Theme", command=self.change_theme, style="Main.TButton").pack(pady=10, fill=tk.X)
-        ttk.Button(self, text="View Source Code", command=self.view_source_code, style="Main.TButton").pack(pady=10, fill=tk.X)
-
-    def change_theme(self):
-        # Add code to change the theme
-        pass
-
-    def view_source_code(self):
-        url = "https://github.com/your_username/your_repository"
-        webbrowser.open
+            messagebox
