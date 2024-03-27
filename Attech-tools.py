@@ -1,43 +1,40 @@
-import tkinter as tk
+import folium
+import ipinfo
 
-class MultiuseToolGUI:
-    def __init__(self, master):
-        self.master = master
-        self.master.title("Multiuse Tool")
-        self.master.geometry("800x600")
+# Function to get location information from an IP address
+def get_ip_location(ip_address):
+    """
+    Retrieves the location information for a given IP address using the IPInfo API.
 
-        self.create_menu()
-        self.create_settings_option()
-        self.create_ip_to_location_map()
+    Args:
+        ip_address (str): The IP address to look up.
 
-    def create_menu(self):
-        menu = tk.Menu(self.master)
-        self.master.config(menu=menu)
+    Returns:
+        dict: A dictionary containing the location information, including latitude, longitude, city, region, and country.
+    """
+    handler = ipinfo.getHandler()
+    details = handler.getDetails(ip_address)
+    return {
+        "latitude": details.latitude,
+        "longitude": details.longitude,
+        "city": details.city,
+        "region": details.region,
+        "country": details.country
+    }
 
-        file_menu = tk.Menu(menu, tearoff=0)
-        file_menu.add_command(label="DDoS")
-        file_menu.add_command(label="Bruteforce")
-        file_menu.add_separator()
-        file_menu.add_command(label="Exit")
-        menu.add_cascade(label="Tools", menu=file_menu)
+# Example usage
+ip_address = input("Enter an IP address: ")
+location_info = get_ip_location(ip_address)
 
-    def create_settings_option(self):
-        settings_frame = tk.Frame(self.master, width=200, height=100, bg="lightgray")
-        settings_frame.place(x=10, y=490)
+# Create a map centered on the IP location
+map = folium.Map(location=[location_info["latitude"], location_info["longitude"]], zoom_start=10)
 
-        settings_label = tk.Label(settings_frame, text="Settings", bg="lightgray")
-        settings_label.pack()
+# Add a marker to the map
+folium.Marker(
+    [location_info["latitude"], location_info["longitude"]],
+    popup=f"{location_info['city']}, {location_info['region']}, {location_info['country']}"
+).add_to(map)
 
-        themes_option = tk.OptionMenu(settings_frame, tk.StringVar(), "Theme 1", "Theme 2", "Theme 3")
-        themes_option.pack()
-
-    def create_ip_to_location_map(self):
-        map_canvas = tk.Canvas(self.master, width=600, height=400, bg="white")
-        map_canvas.place(x=200, y=50)
-
-        # Add code here to show the IP to location on the map using a suitable library
-
-if __name__ == "__main__":
-    root = tk.Tk()
-    app = MultiuseToolGUI(root)
-    root.mainloop()
+# Display the map
+map.save("ip_location.html")
+print("Map saved as ip_location.html. Open the file in a web browser to view the location.")
