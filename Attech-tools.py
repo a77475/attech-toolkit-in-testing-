@@ -121,4 +121,13 @@ class BruteForceWindow(tk.Toplevel):
 
         self.entry_url = self.create_entry("URL:")
 
-    def c
+    def create_entry(self, label_text, **kwargs):
+        frame = ttk.Frame(self, padding=(50, 0))
+        frame.pack(fill=tk.X, **kwargs)
+        ttk.Label(frame, text=label_text, background="#ffffff").pack(side=tk.LEFT)
+        entry = ttk.Entry(frame)
+        entry.pack(side=tk.RIGHT, fill=tk.X, expand=True)
+
+if __name__ == "__main__":
+    app = AttackToolkit()
+    app.mainloop()
