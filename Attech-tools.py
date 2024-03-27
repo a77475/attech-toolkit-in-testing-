@@ -120,14 +120,4 @@ class IPToLocationWindow(tk.Toplevel):
 
     def open_map(self):
         ip_address = self.entry_ip.get()
-        geolocator = Nominatim(user_agent="geoapiExercises")
-        location = geolocator.geocode(ip_address)
-        if location:
-            url = f"https://www.google.com/maps/place/{location.latitude},{location.longitude}"
-            webbrowser.open_new_tab(url)
-        else:
-            messagebox.showerror("Error", "Location not found.")
-
-if __name__ == "__main__":
-    app = AttackToolkit()
-    app.mainloop()
+       
