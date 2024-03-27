@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
 import webbrowser
+import os
 
 class AttackToolkit(tk.Tk):
     def __init__(self):
