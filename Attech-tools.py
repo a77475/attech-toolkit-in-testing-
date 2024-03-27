@@ -16,7 +16,7 @@ class AttackToolkit(tk.Tk):
 
     def load_logo(self):
         try:
-            logo_path = "logo.png"
+            logo_path = "attech.png"
             if os.path.exists(logo_path):
                 self.logo = Image.open(logo_path)
                 self.logo = self.logo.resize((200, 100), Image.ANTIALIAS)
