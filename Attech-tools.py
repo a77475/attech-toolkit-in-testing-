@@ -1,9 +1,10 @@
 import os
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, messagebox
 from PIL import Image, ImageTk
 import webbrowser
 from ttkthemes import ThemedStyle
+from geopy.geocoders import Nominatim
 
 class AttackToolkit(tk.Tk):
     def __init__(self):
@@ -33,6 +34,7 @@ class AttackToolkit(tk.Tk):
         ttk.Button(topbar_frame, text="DDoS", command=self.open_ddos, style="Topbar.TButton").pack(side=tk.LEFT, padx=10, pady=10)
         ttk.Button(topbar_frame, text="Brute Force", command=self.open_brute_force, style="Topbar.TButton").pack(side=tk.LEFT, padx=10, pady=10)
         ttk.Button(topbar_frame, text="IP to Location", command=self.open_ip_to_location, style="Topbar.TButton").pack(side=tk.LEFT, padx=10, pady=10)
+        ttk.Button(topbar_frame, text="Settings", command=self.open_settings, style="Topbar.TButton").pack(side=tk.RIGHT, padx=10, pady=10)
 
     def open_ddos(self):
         ddos_window = DDoSWindow(self)
@@ -42,6 +44,9 @@ class AttackToolkit(tk.Tk):
 
     def open_ip_to_location(self):
         ip_to_location_window = IPToLocationWindow(self)
+
+    def open_settings(self):
+        settings_window = SettingsWindow(self)
 
 class DDoSWindow(tk.Toplevel):
     def __init__(self, master):
@@ -114,17 +119,30 @@ class IPToLocationWindow(tk.Toplevel):
 
     def open_map(self):
         ip_address = self.entry_ip.get()
-        url = f"https://www.google.com/maps/search/?api=1&query={ip_address}"
-        webbrowser.open_new_tab(url)
+        geolocator = Nominatim(user_agent="geoapiExercises")
+        location = geolocator.geocode(ip_address)
+        if location:
+            url = f"https://www.google.com/maps/place/{location.latitude},{location.longitude}"
+            webbrowser.open_new_tab(url)
+        else:
+            messagebox.showerror("Error", "Invalid IP address or location not found.")
 
-if __name__ == "__main__":
-    app = AttackToolkit()
+class SettingsWindow(tk.Toplevel):
+    def __init__(self, master):
+        super().__init__(master)
+        self.title("Settings")
+        self.geometry("400x300")
+        self.configure(bg="#f0f0f0")
 
-    style = ttk.Style()
-    style.theme_use("clam")
+        ttk.Label(self, text="Settings", font=("Helvetica", 20), background="#f0f0f0").pack(pady=20)
 
-    style.configure("Topbar.TButton", foreground="#fff", background="#007bff", font=("Helvetica", 12), padding=10, borderwidth=0, relief="solid", bordercolor="#007bff", borderradius=20)
-    style.map("Topbar.TButton", background=[("active", "#0056b3")])
-    style.configure("Main.TButton", foreground="#fff", background="#007bff", font=("Helvetica", 12), padding=10, borderwidth=0, relief="solid", bordercolor="#007bff", borderradius=20)
+        ttk.Button(self, text="Change Theme", command=self.change_theme, style="Main.TButton").pack(pady=10, fill=tk.X)
+        ttk.Button(self, text="View Source Code", command=self.view_source_code, style="Main.TButton").pack(pady=10, fill=tk.X)
 
-    app.mainloop()
+    def change_theme(self):
+        # Add code to change the theme
+        pass
+
+    def view_source_code(self):
+        url = "https://github.com/your_username/your_repository"
+        webbrowser.open
