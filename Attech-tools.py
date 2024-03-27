@@ -104,4 +104,5 @@ class IPToLocationWindow(tk.Toplevel):
         self.geometry("400x400")
         self.configure(bg="#f0f0f0")
 
-        ttk.Label(self, text="IP to
+      ttk.Label(self, text="IP to Location Tool", font=("Helvetica", 20), background="#f0f0f0").pack(pady=20)
+
