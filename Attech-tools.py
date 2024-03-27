@@ -1,11 +1,11 @@
 import tkinter as tk
 from tkinter import ttk
-from tkinter import messagebox
 import threading
 import socket
 import time
 import requests
 from PIL import ImageTk, Image
+import os
 
 class AttackToolkit(tk.Tk):
     def __init__(self):
@@ -20,11 +20,18 @@ class AttackToolkit(tk.Tk):
         style.configure("TLabel", background="#ffffff", font=("Helvetica", 14))
         style.configure("TButton", font=("Helvetica", 14))
 
-        self.logo = Image.open("logo.png")  # Change "logo.png" to your logo file
-        self.logo = self.logo.resize((100, 100), Image.ANTIALIAS)
-        self.logo = ImageTk.PhotoImage(self.logo)
-        self.label_logo = ttk.Label(self, image=self.logo)
-        self.label_logo.pack(pady=20)
+        try:
+            self.logo_path = "logo.png"  # Change "logo.png" to your logo file path
+            if os.path.exists(self.logo_path):
+                self.logo = Image.open(self.logo_path)
+                self.logo = self.logo.resize((100, 100), Image.ANTIALIAS)
+                self.logo = ImageTk.PhotoImage(self.logo)
+                self.label_logo = ttk.Label(self, image=self.logo)
+                self.label_logo.pack(pady=20)
+            else:
+                print("Logo file not found.")
+        except Exception as e:
+            print("Error loading logo:", e)
 
         self.menu = tk.Menu(self)
         self.config(menu=self.menu)
@@ -114,3 +121,4 @@ class BruteForceWindow(tk.Toplevel):
 
         self.entry_url = self.create_entry("URL:")
 
+    def c
